@@ -1,16 +1,24 @@
-function (global) {
+(function (global) {
+  
+  var _funcs = [];
+  var $ = function (selector) {
+    return window.document.querySelectorAll(selector);
+  };
   
   var ignite = {
     
-    var _funcs = [];
-    var $ = function (selector) {
-      return window.document.querySelectorAll(selector);
-    };
-    
     add: function (v, f) {
       var o = v;
-      if (typeof v === 'function') o = {condition: true, func: v};
-      if (typeof v === 'string' && typeof f === 'function') {
+      if (typeof v === 'function' && typeof f === "undefined") {
+        o = {condition: true, func: v};
+      }
+      else if (typeof v === 'function' && typeof f === "function") {
+        o = {condition: v, func: f};
+      }
+      else if (typeof v === 'boolean') {
+        o = {condition: v, func: f};        
+      }
+      else if (typeof v === 'string' && typeof f === 'function') {
         o = {
           condition: function () {
             return $(v).length > 0;
@@ -22,10 +30,10 @@ function (global) {
       _funcs.push(o);
     },
     
-    run: function () {
+    spark: function () {
       var i, f, condition, l = _funcs.length;
       
-      for(i = 0 ; i < l ; i++) {
+      for (i = 0 ; i < l ; i++) {
         f = _funcs[i];
         condition = (typeof f.condition === 'function' ? f.condition() : f.condition);
         if (condition) {
