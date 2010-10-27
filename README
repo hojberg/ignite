@@ -1,0 +1,4 @@
+ignite.add({condition: true, func: function () { /* ... */ }});
+ignite.add(function () { /* ... */ });
+ignite.add("#myid", function () { /* ... */ });
+$(document).ready(ignite.run);
