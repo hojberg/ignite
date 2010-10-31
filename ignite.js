@@ -1,6 +1,6 @@
 (function (global, selectorEngine) {
   
-  var ignite = {}, _funcs = [], $DOM;
+  var ignite = {}, funcs = [], $DOM;
   
   var is = function (type, value) {
     return typeof value === type
@@ -33,14 +33,14 @@
       };
     }
     
-    _funcs.push(init);
+    funcs.push(init);
   };
     
   ignite.spark = function () {
     var i, f, condition, l = _funcs.length;
     
     for (i = 0 ; i < l ; i++) {
-      f = _funcs[i];
+      f = funcs[i];
       condition = (is("function", f.condition) ? f.condition() : f.condition);
       if (condition) {
         f.func();
