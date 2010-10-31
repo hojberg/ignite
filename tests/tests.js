@@ -32,7 +32,6 @@ test("should execute inits", function() {
   }});
   
   ignite.spark();
-  
 
   ok(initsExecuted.indexOf("simple selector")   !== -1, "simple selector was executed");  
   ok(initsExecuted.indexOf("advanced selector") !== -1, "advanced selector was executed");

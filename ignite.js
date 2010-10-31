@@ -1,48 +1,53 @@
-(function (global) {
+(function (global, selectorEngine) {
   
-  var _funcs = [];
-  var $ = function (selector) {
-    return window.document.querySelectorAll(selector);
+  var ignite = {}, _funcs = [], $DOM;
+  
+  var is = function (type, value) {
+    return typeof value === type
   };
   
-  var ignite = {
-    
-    add: function (v, f) {
-      var o = v;
-      if (typeof v === 'function' && typeof f === "undefined") {
-        o = {condition: true, func: v};
-      }
-      else if (typeof v === 'function' && typeof f === "function") {
-        o = {condition: v, func: f};
-      }
-      else if (typeof v === 'boolean') {
-        o = {condition: v, func: f};        
-      }
-      else if (typeof v === 'string' && typeof f === 'function') {
-        o = {
-          condition: function () {
-            return $(v).length > 0;
-          },
-          func: f
-        };
-      }
-      
-      _funcs.push(o);
-    },
-    
-    spark: function () {
-      var i, f, condition, l = _funcs.length;
-      
-      for (i = 0 ; i < l ; i++) {
-        f = _funcs[i];
-        condition = (typeof f.condition === 'function' ? f.condition() : f.condition);
-        if (condition) {
-          f.func();
-        }
-      }      
+  if (!is("undefined", selectorEngine)) {
+    $DOM = selectorEngine; 
+  }
+  else {
+    $DOM = function (selector) {
+      return window.document.querySelectorAll(selector);
+    };
+  }
+  
+  ignite.add = function (v, func) {
+    var init = v;
+    if (is('function', v) && is('undefined', func)) {
+      init = {condition: true, func: v};
+    }
+    else if (is('function', v) && is('function', func)) {
+      init = {condition: v, func: func};
+    }
+    else if (is('boolean', v)) {
+      init = {condition: v, func: func};        
+    }
+    else if (is('string', v) && is('function', func)) {
+      init = {
+        condition: function () { return $DOM(v).length > 0; },
+        func: func
+      };
     }
     
+    _funcs.push(init);
+  };
+    
+  ignite.spark = function () {
+    var i, f, condition, l = _funcs.length;
+    
+    for (i = 0 ; i < l ; i++) {
+      f = _funcs[i];
+      condition = (is("function", f.condition) ? f.condition() : f.condition);
+      if (condition) {
+        f.func();
+      }
+    }      
   };
   
-  window[global] = ignite;  
+  window[global] = ignite;
+
 }("ignite"));
