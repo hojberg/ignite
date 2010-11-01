@@ -1,4 +1,15 @@
+* add init functions on with a condition
 ignite.add({condition: true, func: function () { /* ... */ }});
-ignite.add(function () { /* ... */ });
+* can also just be the boolean as the first argument
+ignite.add(true, function () { /* ... */ });
+
+* always run the init function
+ignite.add(function () { /* ... */ }); 
+
+* run the init function if #myid exists in the dom
+* you can pass a selector engine to the self executing function
+* that ignite is wrapped in to use jquery or similar
 ignite.add("#myid", function () { /* ... */ });
-$(document).ready(ignite.run);
+
+* run with:
+$(document).ready(ignite.spark);

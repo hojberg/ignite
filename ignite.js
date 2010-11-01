@@ -37,7 +37,7 @@
   };
     
   ignite.spark = function () {
-    var i, f, condition, l = _funcs.length;
+    var i, f, condition, l = funcs.length;
     
     for (i = 0 ; i < l ; i++) {
       f = funcs[i];
