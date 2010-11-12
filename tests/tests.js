@@ -1,33 +1,34 @@
 test("ignite api should exists ", function() {
   ok(typeof ignite !== 'undefined', "ignite global exists");
   ok(typeof ignite.spark === 'function', "ignite.spark is a function");
-  ok(typeof ignite.add === 'function', "ignite.add is a function");
+  ok(typeof ignite.on === 'function', "ignite.on is a function");
+  ok(typeof ignite.on(function () {}) === 'function', "ignite.on should return a function");
 });
 
 test("should execute inits", function() {
   var initsExecuted = [];
   
-  ignite.add("#simpleselector", function () {
+  ignite.on("#simpleselector", function () {
     initsExecuted.push("simple selector");
   });
   
-  ignite.add("#my .advanced .selector", function () {
+  ignite.on("#my .advanced .selector", function () {
     initsExecuted.push("advanced selector");
   });
   
-  ignite.add(true, function () {
+  ignite.on(true, function () {
     initsExecuted.push("boolean");
   });
   
-  ignite.add(function () {
+  ignite.on(function () {
     initsExecuted.push("just function");
   });
   
-  ignite.add(function () { return true; }, function () {
+  ignite.on(function () { return true; }, function () {
     initsExecuted.push("function");
   });
   
-  ignite.add({condition: true, func: function () {
+  ignite.on({condition: true, func: function () {
     initsExecuted.push("object");
   }});
   
@@ -45,15 +46,15 @@ test("should execute inits", function() {
 test("should not execute inits", function() {
   var initsExecuted = [];
   
-  ignite.add("#my .selector_that_is_not_there", function () {
+  ignite.on("#my .selector_that_is_not_there", function () {
     initsExecuted.push("selector");
   });
   
-  ignite.add(false, function () {
+  ignite.on(false, function () {
     initsExecuted.push("boolean");
   });
   
-  ignite.add({condition: false, func: function () {
+  ignite.on({condition: false, func: function () {
     initsExecuted.push("object");
   }});
   

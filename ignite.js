@@ -15,7 +15,7 @@
     };
   }
   
-  ignite.add = function (v, func) {
+  ignite.on = function (v, func) {
     var init = v;
     if (is('function', v) && is('undefined', func)) {
       init = {condition: true, func: v};
@@ -34,6 +34,7 @@
     }
     
     funcs.push(init);
+	return init.func;
   };
     
   ignite.spark = function () {
