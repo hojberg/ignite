@@ -65,3 +65,18 @@ test("should not execute inits", function() {
   ok(initsExecuted.indexOf("object")    === -1, "object was executed");
 
 });
+
+test("should keep scope", function() {
+  var scope = null;
+  
+  var myApp = {
+    meth: ignite.on(true, function () {
+      scope = this;
+    }, myApp)
+  };
+  
+  ignite.spark();
+  
+  equal(scope, myApp);
+
+});
