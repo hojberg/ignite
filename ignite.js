@@ -13,8 +13,7 @@ var ignite = (function (selectorEngine) {
       return window.document.querySelectorAll(selector);
     };
   }
-
-  return {
+  return {  
     on: function (v, func) {
       var init = v;
       if (is('function', v) && is('undefined', func)) {

@@ -80,3 +80,21 @@ test("should keep scope", function() {
   equal(scope, myApp);
 
 });
+
+test("should defer execution", function () {
+  
+  var order = [];
+  
+  ignite.on(function () {
+    order.push("defered method");
+  });
+  
+  ignite.on(function () {
+    order.push("normal method");    
+  });
+  
+  ignite.spark();
+  
+  equal(order[0], "normal method");
+  
+});
